@@ -66,16 +66,18 @@
 					this.message = '';
 				}
 			}
+		},
+
+		mounted: function(){
+			socket.on('connect', function(){
+				console.log('client connected! ', socket.id);
+			});
+
+			socket.on('message', function(data){
+				
+			});
 		}
 	}
-
-	socket.on('connect', function(){
-		console.log('client connected! ', socket.id);
-	});
-
-	socket.on('message', function(data){
-		alert(data.message);
-	});
 </script>
 
 <style type="text/css">

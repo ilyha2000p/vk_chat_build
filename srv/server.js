@@ -20,6 +20,12 @@ io.on('connection', function (socket) {
 
         io.emit('message', data);
     });
+
+    socket.on('disconnect', function(reason){
+        socket.disconnect(function(){
+            console.log('disconnected!');
+        });
+    });
 });
 
 
