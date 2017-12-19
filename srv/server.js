@@ -18,7 +18,8 @@ io.on('connection', function (socket) {
     socket.on('message', function(data){
         console.log(socket.id + ' : ' + data);
 
-        io.emit('message', data);
+        //io.emit('message', data);
+        socket.broadcast.emit('message', data);
     });
 
     socket.on('disconnect', function(reason){

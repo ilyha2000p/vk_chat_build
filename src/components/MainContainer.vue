@@ -53,7 +53,7 @@
 
 		methods: {
 			sendMessage: function(){
-					if(this.message != ''){
+				if(this.message != ''){
 					socket.emit('message', this.message);
 
 					this.messages.push({
@@ -69,12 +69,28 @@
 		},
 
 		mounted: function(){
+			this.$nextTick(function(){
 			socket.on('connect', function(){
 				console.log('client connected! ', socket.id);
 			});
 
 			socket.on('message', function(data){
-				
+				sendMessage();
+
+				/*if(this.message != ''){
+					socket.emit('message', this.message);
+
+					this.messages.push({
+						text: data,
+
+						yourMessage: false,
+						interlocatorMessage: true
+					});
+
+					this.message = '';
+				}*/
+			});
+			
 			});
 		}
 	}
