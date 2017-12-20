@@ -1,13 +1,12 @@
 <template>
   <div id="app">
-    <navbar></navbar>
-    <main-container></main-container>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
   import Navbar from './components/Navbar.vue'
-  import mainContainer from './components/MainContainer.vue'
+  import MainContainer from './components/MainContainer.vue'
 
   export default {
     name: 'app',
@@ -20,11 +19,26 @@
 
     components: {
       Navbar,
-      mainContainer
+      MainContainer,
+    },
+
+    mounted: function(){
+      axios({
+        method: 'POST',
+        url: 'http://localhost:3000/'
+      })
+        .then(function(res){
+          alert('post');
+        })
+        .else(function(err){
+
+        });
     }
   }
 </script>
 
-<style>
-
+<style> 
+  body{
+    background-color: #edeef0 !important;
+  }
 </style>

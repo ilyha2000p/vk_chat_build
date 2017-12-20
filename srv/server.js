@@ -3,13 +3,23 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 var bodyParser = require('body-parser');
+var cors = require('cors');
 var fs = require('fs');
+var consolidate = require('consolidate');
+
+app.engine('hbs', consolidate.handlebars);	//движком для шоблонов с расширением .hbs будет handlebars
+app.set('view engine', 'hbs');	//чтобы не указывать расширение .hbs
+app.set('views', 'hbs_views/');	//каталог с шаблонизаторами
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.get('/', function(req,res){
-    fs.ReadStream('../src/vk_enter.html').pipe(res);
+app.use(cors());
+
+app.post('/', function(req,res){
+    console.log('POST: /');
+
+    res.render('entrance');
 });
 
 io.on('connection', function (socket) {
@@ -18,7 +28,6 @@ io.on('connection', function (socket) {
     socket.on('message', function(data){
         console.log(socket.id + ' : ' + data);
 
-        //io.emit('message', data);
         socket.broadcast.emit('message', data);
     });
 

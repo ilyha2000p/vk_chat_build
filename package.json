@@ -11,9 +11,13 @@
   },
   "dependencies": {
     "body-parser": "^1.18.2",
+    "consolidate": "^0.15.0",
+    "cors": "^2.8.4",
     "express": "^4.16.2",
+    "handlebars": "^4.0.11",
     "socket.io": "^2.0.4",
     "vue": "^2.4.4",
+    "vue-router": "^3.0.1",
     "vue-socket.io": "^2.1.1-a"
   },
   "browserslist": [

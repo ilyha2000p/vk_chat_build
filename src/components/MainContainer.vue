@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<navbar></navbar>
 		<div class="container" id="chatContainer">
 			<div class="container-fluid" id="messagesContainer">
 				<message v-for="message in messages" 
@@ -25,6 +26,7 @@
 
 <script type="text/javascript">
 	import Message from './Message.vue'
+	import Navbar from './Navbar.vue'
 
 	var socket = io.connect('http://localhost:3000');
 
@@ -36,19 +38,13 @@
 				message : '',
 
 				messages:[
-					{
-						text: 'blabla',
-
-						yourMessage: true,
-						interlocatorMessage: false
-						
-					}
 				]
 			}
 		},
 
 		components: {
-			Message
+			Message,
+			Navbar
 		},
 
 		methods: {
@@ -70,33 +66,24 @@
 
 		mounted: function(){
 			this.$nextTick(function(){
-			socket.on('connect', function(){
-				console.log('client connected! ', socket.id);
-			});
+				socket.on('connect', function(){
+					console.log('client connected! ', socket.id);
+				});
 
-			socket.on('message', function(data){
-				sendMessage();
-
-				/*if(this.message != ''){
-					socket.emit('message', this.message);
-
+				socket.on('message', (data)=>{
 					this.messages.push({
 						text: data,
 
 						yourMessage: false,
 						interlocatorMessage: true
 					});
-
-					this.message = '';
-				}*/
-			});
-			
+				});
 			});
 		}
 	}
 </script>
 
-<style type="text/css">
+<style scoped type="text/css">
 	#chatContainer{
 		background-color: #A7BDC1;
 		border-radius: 10px;
