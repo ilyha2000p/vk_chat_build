@@ -16,10 +16,9 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-app.post('/', function(req,res){
-    console.log('POST: /');
-
-    res.render('entrance');
+app.post('/auth', function(req,res){
+    console.log(req.body);
+    res.end();
 });
 
 io.on('connection', function (socket) {

