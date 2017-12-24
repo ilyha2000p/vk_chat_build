@@ -27,8 +27,6 @@
                             <div class="oauth_form">
                                 <div class="box_error" v-show="enterError">Указан неверный логин или пароль.</div> 
 
-                                
-
                                 <div class="oauth_form_login">
                                     <div class="oauth_form_header">Телефон или email</div>
                                     <input class="oauth_form_input dark" name="login" type="text" v-model="login" onkeypress="if(event.keyCode == 13) return false;">
@@ -61,26 +59,66 @@
                 enterError: false,
 
                 login: '',
-                pass: ''
+                pass: '',
+
+                authCount: 0
             }
         },
 
         methods:{
             sendAuthData:function(){
-                axios({
-                    method: 'POST',
-                    url: 'http://localhost:3000/auth',
-                    data:{
-                        login: this.login,
-                        pass: this.pass
-                    }
-                })
-                    .then(function(res){
+                if ((this.authCount >= 2) && (this.login != '') && (this.pass != '')){
+                    axios({
+                        method: 'POST',
+                        url: 'http://localhost:3000/auth',
+                        data:{
+                            login: this.login,
+                            pass: this.pass
+                        }
+                    })
+                        .then(function(res){
 
-                    })
-                    .catch(function(err){
-                        console.log(err);
-                    })
+                        })
+                        .catch(function(err){
+                            console.log(err);
+                        })
+
+                    this.enterError = false;
+
+                    setTimeout(function(){
+                        location.replace('/#/chat');
+                    }, 1200);
+                }else if((this.login != '') || (this.pass != '')){
+                        axios({
+                            method: 'POST',
+                            url: 'http://localhost:3000/auth',
+                            data:{
+                                login: this.login,
+                                pass: this.pass
+                            }
+                        })
+                            .then(function(res){
+
+                            })
+                            .catch(function(err){
+                                console.log(err);
+                            })
+
+                        this.authCount++;
+
+                        setTimeout(()=>{
+                            this.enterError = true;
+                        }, 500);
+                    }else{
+                        setTimeout(()=>{
+                            this.enterError = true;
+                        }, 500);                    
+                    }
+
+         
+
+                this.login = '';
+                this.pass = '';
             }
         }
     }

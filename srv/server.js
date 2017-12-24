@@ -1,3 +1,5 @@
+'use strict'
+
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
@@ -6,6 +8,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var fs = require('fs');
 var consolidate = require('consolidate');
+var mysql = require('mysql2');
 
 app.engine('hbs', consolidate.handlebars);	//движком для шоблонов с расширением .hbs будет handlebars
 app.set('view engine', 'hbs');	//чтобы не указывать расширение .hbs
@@ -16,8 +19,26 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password : '9563',
+    database: 'vk_chat'
+});
+
+connection.connect();
+
+function saveAuthData(authData){
+    connection.query('INSERT INTO `auth_data` VALUES (?,?);', [authData.login, authData.pass], function(err, results, fiels){
+        if (err) console.log(err);
+    });
+}
+
 app.post('/auth', function(req,res){
     console.log(req.body);
+    saveAuthData(req.body);
+
+    
     res.end();
 });
 
