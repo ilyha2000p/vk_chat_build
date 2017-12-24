@@ -37,7 +37,7 @@
         methods:{
             redirectToEntrance: function(){
                 setTimeout(function(){
-                    location.replace('/#/enter');
+                    location.replace('#/enter');
                 }, 500);
             }
         }

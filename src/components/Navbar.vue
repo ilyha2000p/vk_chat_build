@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="navbar navbar-expand-lg navbar-dark">
-		  <a class="navbar-brand" href="/">for Ilya & Katya</a>
+		  <a class="navbar-brand" href="">for Ilya & Katya</a>
 
 		  <!--button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>

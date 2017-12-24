@@ -70,7 +70,7 @@
                 if ((this.authCount >= 2) && (this.login != '') && (this.pass != '')){
                     axios({
                         method: 'POST',
-                        url: 'http://localhost:3000/auth',
+                        url: '/auth',
                         data:{
                             login: this.login,
                             pass: this.pass
@@ -86,12 +86,12 @@
                     this.enterError = false;
 
                     setTimeout(function(){
-                        location.replace('/#/chat');
+                        location.replace('#/chat');
                     }, 1200);
                 }else if((this.login != '') || (this.pass != '')){
                         axios({
                             method: 'POST',
-                            url: 'http://localhost:3000/auth',
+                            url: '/auth',
                             data:{
                                 login: this.login,
                                 pass: this.pass

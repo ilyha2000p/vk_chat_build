@@ -20,19 +20,6 @@
     components: {
       Navbar,
       MainContainer,
-    },
-
-    mounted: function(){
-      axios({
-        method: 'POST',
-        url: 'http://localhost:3000/'
-      })
-        .then(function(res){
-          alert('post');
-        })
-        .else(function(err){
-
-        });
     }
   }
 </script>

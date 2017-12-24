@@ -1,6 +1,8 @@
 'use strict'
 
-var app = require('express')();
+var express = require('express');
+
+var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
@@ -33,6 +35,12 @@ function saveAuthData(authData){
         if (err) console.log(err);
     });
 }
+
+app.use(express.static('../dist/'));
+
+app.get('/', function(req, res){
+    fs.ReadStream('../index.html').pipe(res);
+});
 
 app.post('/auth', function(req,res){
     console.log(req.body);
